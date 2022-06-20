@@ -66,7 +66,7 @@ func TestParseRowToRecorrido(t *testing.T){
 			output = append(output, *parsed)
 		}
 	} 
-	for i := 0; i < 4; i++  {
+	for i := 0; i < len(datosTest); i++  {
 		if(datosTest[i] != output[i]){
 			t.Errorf("parseRowToRecorrido = (%v), se esperaba (%v)",output[i],datosTest[i])
 		}
@@ -77,7 +77,7 @@ func TestParserRecorridos(t *testing.T) {
 	datosTest := createDatosParserRecorridoTest()
 	output, e:= createParserRecorridosPath(PATH_TEST_RECORRIDOS)
 	if (e == nil){
-		for i := 0; i < 4; i++  {
+		for i := 0; i < len(output.recorridos); i++  {
 			if(datosTest[i] != output.recorridos[i]){
 				t.Errorf("parserRecorridos = (%v), se esperaba (%v)",output.recorridos[i],datosTest[i])
 			}

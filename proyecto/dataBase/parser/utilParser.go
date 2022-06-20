@@ -37,6 +37,21 @@ func ParseToUint32Error(cadena string, eParam error) (entero uint32, e error){
 	return entero, e
 }
 
+/* Params: cadena (entero como cadena), eParam (error)
+   Returns: entero (entero convertido desde la cadena), 
+   			e (el primer error en orden de aparación entre eParam y 
+			el error de conversión)
+*/
+func ParseToUint16Error(cadena string, eParam error) (entero uint16, e error){
+	var entero64 uint64
+	entero64, e = strconv.ParseUint(cadena, 10, 16)
+	entero = uint16(entero64)
+	if (eParam != nil){
+		e = eParam
+	}
+	return entero, e
+}
+
 /* 
 	Params: cadena (entero como cadena), eParam (error)
    	Returns: entero (entero convertido desde la cadena), 

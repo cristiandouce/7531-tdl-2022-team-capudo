@@ -52,6 +52,33 @@ func TestParseToUint32Error(t *testing.T) {
 	}
 }
 
+
+type tDatosParseToUint16ErrorTest struct {
+	input  string
+	eParam error
+	output  uint16
+	eTag string
+}
+
+var DatosParseToUint16ErrorTest = []tDatosParseToUint16ErrorTest{
+	{input: "1789", eParam: nil, output: 1789, eTag: ""},
+	{input: "1879", eParam: nil, output: 1879, eTag: ""},
+	{input: "-1879", eParam: nil, output: 0, eTag: "invalid syntax"},
+	{input: "-1879", eParam: fmt.Errorf("Error"), output: 1879, eTag: "Error"},
+}
+
+func TestParseToUint16Error(t *testing.T) {
+	for _, test := range DatosParseToUint16ErrorTest {
+		output,  e:= ParseToUint16Error(test.input, test.eParam)
+		if(test.output != output && !strings.Contains(e.Error(), test.eTag) ){
+			t.Errorf("ParseToUint16Error = (%v), se esperaba (%v)",output, test.input)
+		}
+	}
+}
+
+
+
+
 type tDatosParseToIntErrorTest struct {
 	input  string
 	eParam error
