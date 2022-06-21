@@ -1,14 +1,14 @@
 package parser
 
 import (
-	"time"
-	"strings"
-	"strconv"
 	"fmt"
+	"strconv"
+	"strings"
+	"time"
 )
 
 /*
-	Params: cadena (flotante como string), eParam (error arrastrado). 
+	Params: cadena (flotante como string), eParam (error arrastrado).
 	Returns: fotante32 (flotante resultado de la conversión de la cadena),
 		error(se retorna el primer error en aparición entre el parámetro y el error
 		generado en la conversión)
@@ -108,4 +108,23 @@ func ParseTimeUTCError(tiempoCadena string, eParam error) (t time.Time, e error)
 		e = eParam
 	}
 	return t, e
+}
+
+/* Params: cadena (entero 16 bits como cadena), eParam (error)
+   Returns: entero (entero convertido desde la cadena), 
+   			e (el primer error en orden de aparación entre eParam y 
+			el error de conversión)
+			En caso de cadena vacía o con valor None se retorna -1 sin retornar error
+			propio de esta función.
+*/
+func ParseToInt16WithEmptyError(cadenaParam string, eParam error) (entero16 int16, e error){
+	entero16 = -1
+	if((len(cadenaParam) > 0) && (!strings.Contains(cadenaParam,"None"))){
+		var enteroU16 uint16
+		enteroU16, e = ParseToUint16Error(cadenaParam, eParam)
+		entero16 = int16(enteroU16)			
+	} else {
+		e = eParam
+	}
+	return entero16, e
 }

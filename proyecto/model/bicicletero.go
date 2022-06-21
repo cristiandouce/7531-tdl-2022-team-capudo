@@ -9,7 +9,7 @@ type Bicicletero struct{
 	nombre_referencia string
 	anio_de_ingreso uint16
 	tipo string
-	cantidad_bicicleteros string
+	cantidad_bicicleteros int16
 	//dirección y clasificación
 	ubicacion string
 	clasificacion_lugar string
@@ -23,7 +23,7 @@ type Bicicletero struct{
 }
 
 func CreateBicicletero(lat float32, long float32, id uint16, nombre_referencia string, 
-					anio_de_ingreso uint16, tipo string, cantidad_bicicleteros string,
+					anio_de_ingreso uint16, tipo string, cantidad_bicicleteros int16,
 					ubicacion string, clasificacion_lugar string,
 					calle string, altura uint16, calle_interseccion string, 
 					barrio string, comuna string, codigo_postal string,

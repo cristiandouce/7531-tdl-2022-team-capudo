@@ -32,7 +32,7 @@ func parseRowToBicicletero(row []string) (b *model.Bicicletero, e error) {
 	nombre_referencia := row[3]
 	anio_de_ingreso, e := ParseToUint16Error(row[4], e)
 	tipo := row[5]
-	cantidad_bicicleteros := row[6]
+	cantidad_bicicleteros, e := ParseToInt16WithEmptyError(row[6], e)
 	ubicacion := row[7]
 	clasificacion_lugar := row[8]
 	calle := row[9]
