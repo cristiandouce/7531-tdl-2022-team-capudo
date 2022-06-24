@@ -1,4 +1,4 @@
 package parser
 
-const PATH_RECORRIDOS = ""
-const PATH_BICICLETEROS = ""
+const PATH_RECORRIDOS = "" ///home/USUARIO/trips_2021.csv
+const PATH_BICICLETEROS = "" ///home/USUARIO/bicicleteros.csv
