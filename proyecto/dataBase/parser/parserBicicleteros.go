@@ -92,9 +92,9 @@ func createParserBicicleteros() (parBici *parserBicicleteros, e error) {
 	Nota: la función utiliza una llave de exclusión internamente.
 */
 func GetBicicleteros() (bicicleteros *[]model.Bicicletero, e error) {
-	lock_bicicleteros.Lock()
-	defer lock_bicicleteros.Unlock()
 	if instanceParserBicicleteros == nil {
+		lock_bicicleteros.Lock()
+		defer lock_bicicleteros.Unlock()
 		instanceParserBicicleteros, e = createParserBicicleteros()
 		if e == nil {
 			bicicleteros = &instanceParserBicicleteros.bicicleteros

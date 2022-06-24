@@ -82,7 +82,7 @@ func ParseTimeUTC(tiempoCadena string) (t time.Time, e error){
 		anio, e = ParseToIntError(vectorFecha[0], e)
 	} else {
 		e = fmt.Errorf("formato incorrecto de fecha")
-	}
+	}	
 	// obtención componentes de la hora
 	var hora, minuto, segundos int
 	vectorHora := strings.Split(vectorTiempo[1], ":")

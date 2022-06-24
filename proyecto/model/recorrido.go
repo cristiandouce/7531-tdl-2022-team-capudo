@@ -58,3 +58,89 @@ func CreateRecorrido(id_recorrido string, duraccion_recorrido uint32,
 	r.modelo_bicicleta = modelo_bicicleta
 	return r
 }
+
+func (r *Recorrido) GetIdRecorrido() string{
+	return r.id_recorrido	
+}
+
+func (r *Recorrido) GetDuraccionRecorrido() uint32 {
+	return r.duraccion_recorrido
+}
+
+//origen
+func (r *Recorrido) GetFechaOrigenRecorrido() time.Time{
+	return r.fecha_origen_recorrido
+}
+
+//origen
+func (r *Recorrido) GetIdEstacionOrigen() string{
+	return r.id_estacion_origen
+}
+
+//origen
+func (r *Recorrido) GetNombreEstacionOrigen() string{
+	return r.nombre_estacion_origen
+}
+
+//origen
+func (r *Recorrido) GetDireccionEstacionOrigen() string{
+	return r.direccion_estacion_origen
+}
+
+//origen
+func (r *Recorrido) GetLongEstacionOrigen() float32{
+	return r.long_estacion_origen
+}
+
+//origen
+func (r *Recorrido) GetLatEstacionOrigen() float32{
+	return r.lat_estacion_origen
+}
+
+//origen
+func (r *Recorrido) GetLongLatEstacionOrigen() (float32, float32){
+	return r.long_estacion_origen, r.lat_estacion_origen
+}
+
+//destino
+func (r *Recorrido) GetFechaDestinoRecorrido() time.Time{
+	return r.fecha_destino_recorrido
+}
+
+//destino
+func (r *Recorrido) GetIdEstacionDestino() string{
+	return r.id_estacion_destino
+}
+
+//destino
+func (r *Recorrido) GetNombreEstacionDestino() string{
+	return r.nombre_estacion_destino
+}
+
+//destino
+func (r *Recorrido) GetDireccionEstacionDestino() string{
+	return r.direccion_estacion_destino
+}
+
+//destino
+func (r *Recorrido) GetLongEstacionDestino() float32{
+	return r.long_estacion_destino
+}
+
+//destino
+func (r *Recorrido) GetLatEstacionDestino() float32{
+	return r.lat_estacion_destino
+}
+
+//destino
+func (r *Recorrido) GetLongLatEstacionDestino() (float32, float32){
+	return r.long_estacion_destino, r.lat_estacion_destino
+}
+
+func (r *Recorrido) GetIdUsuario() string{
+	return r.id_usuario
+}
+
+func (r *Recorrido) ModeloBicicleta() string{
+	return r.modelo_bicicleta
+}

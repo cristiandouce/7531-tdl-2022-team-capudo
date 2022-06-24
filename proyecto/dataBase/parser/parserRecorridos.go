@@ -5,7 +5,7 @@ import (
 	"sync"
 )
 
-var lock = &sync.Mutex{}
+var lock_recorridos = &sync.Mutex{}
 
 // Instancia del singleton del parser
 var (
@@ -97,9 +97,9 @@ func createParserRecorridos() (parReco *parserRecorridos, e error) {
 	Nota: la función utiliza una llave de exclusión internamente.
 */
 func GetRecorridos() (recorridos *[]model.Recorrido, e error) {
-	lock.Lock()
-	defer lock.Unlock()
 	if instanceParserRecorridos == nil {
+		lock_recorridos.Lock()
+		defer lock_recorridos.Unlock()
 		instanceParserRecorridos, e = createParserRecorridos()
 		if e == nil {
 			recorridos = &instanceParserRecorridos.recorridos
