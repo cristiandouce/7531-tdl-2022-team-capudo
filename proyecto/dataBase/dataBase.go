@@ -24,3 +24,13 @@ func GetRecorridos() (recorridos *[]model.Recorrido, e error) {
 func GetBicicleteros() (bicicleteros *[]model.Bicicletero, e error) {
 	return parser.GetBicicleteros()
 }
+
+/*
+	Returns:
+		bicicleteros (arrego de bicicleteros)
+		e (el primer error en orden de aparición durante el parseo)
+	Nota: la función puede ser utilizada concurrentemente.
+*/
+func GetUsuarios() (usuarios *[]model.Usuario, e error) {
+	return parser.GetUsuarios()
+}
