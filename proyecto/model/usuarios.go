@@ -1,6 +1,7 @@
 package model
 
 import (
+	"encoding/json"
 	"time"
 )
 
@@ -38,4 +39,19 @@ func (u *Usuario) GetEdadUsuario() uint16 {
 }
 func (u *Usuario) GetFechaAlta() time.Time {
 	return u.fecha_alta
+}
+
+// Ejemplo de serialización de miembros privados al convertir a JSON
+// especificamente cuando se usa `encoder/json`
+func (u *Usuario) MarshalJSON() ([]byte, error) {
+	return json.Marshal(&struct {
+		ID         uint32    `json:"id"`
+		GENERO     string    `json:"genero"`
+		EDAD       uint16    `json:"edad"`
+		FECHA_ALTA time.Time `json:"fecha_alta"`
+	}{
+		ID:         u.id_usuario,
+		GENERO:     u.genero_usuario,
+		EDAD:       u.edad_usuario,
+		FECHA_ALTA: u.fecha_alta})
 }

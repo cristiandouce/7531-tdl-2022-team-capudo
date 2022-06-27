@@ -43,12 +43,12 @@ func parseRowToBicicletero(row []string) (b *model.Bicicletero, e error) {
 	codigo_postal := row[14]
 	codigo_postal_argentino := row[15]
 	if e == nil {
-		b = model.CreateBicicletero(lat, long, id, nombre_referencia, 
-									anio_de_ingreso, tipo, cantidad_bicicleteros,
-									ubicacion, clasificacion_lugar,
-									calle, altura, calle_interseccion, 
-									barrio, comuna, codigo_postal,
-									codigo_postal_argentino)
+		b = model.CreateBicicletero(lat, long, id, nombre_referencia,
+			anio_de_ingreso, tipo, cantidad_bicicleteros,
+			ubicacion, clasificacion_lugar,
+			calle, altura, calle_interseccion,
+			barrio, comuna, codigo_postal,
+			codigo_postal_argentino)
 	}
 	return b, e
 }
@@ -92,13 +92,15 @@ func createParserBicicleteros() (parBici *parserBicicleteros, e error) {
 	Nota: la función utiliza una llave de exclusión internamente.
 */
 func GetBicicleteros() (bicicleteros *[]model.Bicicletero, e error) {
+	lock_bicicleteros.Lock()
+	defer lock_bicicleteros.Unlock()
 	if instanceParserBicicleteros == nil {
-		lock_bicicleteros.Lock()
-		defer lock_bicicleteros.Unlock()
 		instanceParserBicicleteros, e = createParserBicicleteros()
-		if e == nil {
-			bicicleteros = &instanceParserBicicleteros.bicicleteros
+		if e != nil {
+			return nil, e
 		}
 	}
+	bicicleteros = &instanceParserBicicleteros.bicicleteros
+
 	return bicicleteros, e
 }

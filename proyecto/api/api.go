@@ -25,15 +25,9 @@ func init() {
 
 	group := app.Group("/api")
 
-	attach(group, bicicleteros.GetRoutes())
+	bicicleteros.Attach(group)
 	recorridos.Attach(group)
 	usuarios.Attach(group)
-}
-
-func attach(group *gin.RouterGroup, routes gin.RoutesInfo) {
-	for _, r := range routes {
-		group.Handle(r.Method, r.Path, r.HandlerFunc)
-	}
 }
 
 func Start() {

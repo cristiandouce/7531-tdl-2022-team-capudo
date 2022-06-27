@@ -3,7 +3,10 @@ package usuarios
 import (
 	"capudo/api/routes"
 	"capudo/dataBase"
-	"log"
+	"capudo/dataBase/parser"
+	"capudo/model"
+	"errors"
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -19,16 +22,54 @@ func init() {
 	router.GET("", func(ctx *gin.Context) {
 		usuarios, err := dataBase.GetUsuarios()
 
+		// filteredUsers := dataBase.FilterUsuarios(*usuarios, func(u model.Usuario) bool {
+		// 	return u.GetEdadUsuario() > 19
+		// })
+
 		if err != nil {
-			ctx.JSON(http.StatusInternalServerError, gin.H{
-				"error": err.Error()})
+			routes.ReplyWithInternalServerError(ctx, err)
 			return
 		}
 
-		log.Println("USUARIOS", usuarios)
-		ctx.JSON(http.StatusOK, gin.H{
-			"message": "pong",
-		})
+		ctx.JSON(http.StatusOK, usuarios)
+	})
+
+	router.GET("/:id", func(ctx *gin.Context) {
+		userId, err := parser.ParseToUint32Error(ctx.Param("id"), nil)
+
+		if err != nil {
+			routes.ReplyWithBadRequesterror(ctx, err)
+			return
+		}
+
+		usuarios, err := dataBase.GetUsuarios()
+
+		if err != nil {
+			routes.ReplyWithInternalServerError(ctx, err)
+			return
+		}
+
+		var found bool
+		var usuario model.Usuario
+
+		for _, u := range *usuarios {
+			if u.GetIdUsuario() == userId {
+				found = true
+				usuario = u
+				break
+			}
+		}
+
+		fmt.Println("USUARIO", usuario)
+
+		if found {
+			// Es necesario pasar la dirección de memoria
+			// para que ctx.JSON invoke la interfaz de `MarshalJSON()`
+			ctx.JSON(http.StatusOK, &usuario)
+			return
+		}
+
+		routes.ReplyWithNotFoundError(ctx, errors.New("usuario no encontrado"))
 	})
 }
 

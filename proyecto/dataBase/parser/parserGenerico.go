@@ -23,6 +23,7 @@ func CreateParserGenerico(pathArchivo string) (p *parserGenerico, err error) {
 	if( err == nil){
 		defer archivo.Close()
 		csvReader := csv.NewReader(archivo)
+
 		p.rows, err = csvReader.ReadAll()	
 	} 
 	return p, err

@@ -1,5 +1,7 @@
 package parser
 
-const PATH_RECORRIDOS = ""   ///home/USUARIO/trips_2021.csv
-const PATH_BICICLETEROS = "" ///home/USUARIO/bicicleteros.csv
-const PATH_USUARIOS = ""     ///home/USUARIO/usuarios.csv
+import "capudo/config"
+
+var PATH_RECORRIDOS string = config.Get("PATH_RECORRIDOS")
+var PATH_BICICLETEROS string = config.Get("PATH_BICICLETEROS")
+var PATH_USUARIOS string = config.Get("PATH_USUARIOS")

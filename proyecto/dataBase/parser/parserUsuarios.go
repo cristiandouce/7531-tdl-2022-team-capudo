@@ -78,13 +78,14 @@ func createParserUsuarios() (parUser *parserUsuarios, e error) {
 	Nota: la función utiliza una llave de exclusión internamente.
 */
 func GetUsuarios() (Usuarios *[]model.Usuario, e error) {
+	lock_usuarios.Lock()
+	defer lock_usuarios.Unlock()
 	if instanceParserUsuarios == nil {
-		lock_usuarios.Lock()
-		defer lock_usuarios.Unlock()
 		instanceParserUsuarios, e = createParserUsuarios()
-		if e == nil {
-			Usuarios = &instanceParserUsuarios.usuarios
+		if e != nil {
+			return nil, e
 		}
 	}
+	Usuarios = &instanceParserUsuarios.usuarios
 	return Usuarios, e
 }

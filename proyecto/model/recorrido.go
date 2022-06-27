@@ -4,143 +4,143 @@ import (
 	"time"
 )
 
-type Recorrido struct{
+type Recorrido struct {
 	//id y duración
-	id_recorrido string
-	duraccion_recorrido uint32
+	IDRecorrido       string `json:"id"`
+	DuracionRecorrido uint32 `json:"duracion_recorrido"`
 	//origen
-	fecha_origen_recorrido time.Time
-	id_estacion_origen string
-	nombre_estacion_origen string
-	direccion_estacion_origen string
-	long_estacion_origen float32
-	lat_estacion_origen float32
+	FechaOrigenRecorrido    time.Time `json:"fecha_origen_recorrido"`
+	IDEstacionOrigen        string    `json:"id_estacion_origen"`
+	NombreEstacionOrigen    string    `json:"nombre_estacion_origen"`
+	DireccionEstacionOrigen string    `json:"direccion_estacion_origen"`
+	LongEstacionOrigen      float32   `json:"longitud_estacion_origen"`
+	LatEstacionOrigen       float32   `json:"latitud_estacion_origen"`
 	//destino
-	fecha_destino_recorrido time.Time
-	id_estacion_destino string
-	nombre_estacion_destino string
-	direccion_estacion_destino string
-	long_estacion_destino float32
-	lat_estacion_destino float32
+	FechaDestinoRecorrido    time.Time `json:"fecha_destino_recorrido"`
+	IDEstacionDestino        string    `json:"id_estacion_destino"`
+	NombreEstacionDestino    string    `json:"nombre_estacion_destino"`
+	DireccionEstacionDestino string    `json:"direccion_estacion_destino"`
+	LongEstacionDestino      float32   `json:"longitud_estacion_destino"`
+	LatEstacionDestino       float32   `json:"latitud_estacion_destino"`
 	//datos usuario y bici
-	id_usuario string
-	modelo_bicicleta string
+	IDUsuario       string `json:"id_usuario"`
+	ModeloBicicleta string `json:"modelo_bicicleta"`
 }
 
-func CreateRecorrido(id_recorrido string, duraccion_recorrido uint32,
-			fecha_origen_recorrido time.Time, id_estacion_origen string,
-			nombre_estacion_origen string, direccion_estacion_origen string,
-			long_estacion_origen float32, lat_estacion_origen float32,
-			fecha_destino_recorrido time.Time, id_estacion_destino string,
-			nombre_estacion_destino string, direccion_estacion_destino string,
-			long_estacion_destino float32, lat_estacion_destino float32,
-			id_usuario string, modelo_bicicleta string) (r *Recorrido){
-	r = new (Recorrido)
+func CreateRecorrido(IDRecorrido string, DuracionRecorrido uint32,
+	FechaOrigenRecorrido time.Time, IDEstacionOrigen string,
+	NombreEstacionOrigen string, DireccionEstacionOrigen string,
+	LongEstacionOrigen float32, LatEstacionOrigen float32,
+	FechaDestinoRecorrido time.Time, IDEstacionDestino string,
+	NombreEstacionDestino string, DireccionEstacionDestino string,
+	LongEstacionDestino float32, LatEstacionDestino float32,
+	IDUsuario string, ModeloBicicleta string) (r *Recorrido) {
+	r = new(Recorrido)
 	//id y duración
-	r.id_recorrido = id_recorrido
-	r.duraccion_recorrido = duraccion_recorrido
+	r.IDRecorrido = IDRecorrido
+	r.DuracionRecorrido = DuracionRecorrido
 	//origen
-	r.fecha_origen_recorrido = fecha_origen_recorrido
-	r.id_estacion_origen = id_estacion_origen
-	r.nombre_estacion_origen = nombre_estacion_origen
-	r.direccion_estacion_origen = direccion_estacion_origen
-	r.long_estacion_origen = long_estacion_origen
-	r.lat_estacion_origen = lat_estacion_origen
+	r.FechaOrigenRecorrido = FechaOrigenRecorrido
+	r.IDEstacionOrigen = IDEstacionOrigen
+	r.NombreEstacionOrigen = NombreEstacionOrigen
+	r.DireccionEstacionOrigen = DireccionEstacionOrigen
+	r.LongEstacionOrigen = LongEstacionOrigen
+	r.LatEstacionOrigen = LatEstacionOrigen
 	//destino
-	r.fecha_destino_recorrido = fecha_destino_recorrido
-	r.id_estacion_destino = id_estacion_destino
-	r.nombre_estacion_destino = nombre_estacion_destino
-	r.direccion_estacion_destino = direccion_estacion_destino
-	r.long_estacion_destino = long_estacion_destino
-	r.lat_estacion_destino = lat_estacion_destino
+	r.FechaDestinoRecorrido = FechaDestinoRecorrido
+	r.IDEstacionDestino = IDEstacionDestino
+	r.NombreEstacionDestino = NombreEstacionDestino
+	r.DireccionEstacionDestino = DireccionEstacionDestino
+	r.LongEstacionDestino = LongEstacionDestino
+	r.LatEstacionDestino = LatEstacionDestino
 	//datos usuario y bicicleta
-	r.id_usuario = id_usuario
-	r.modelo_bicicleta = modelo_bicicleta
+	r.IDUsuario = IDUsuario
+	r.ModeloBicicleta = ModeloBicicleta
 	return r
 }
 
-func (r *Recorrido) GetIdRecorrido() string{
-	return r.id_recorrido	
+func (r *Recorrido) GetIdRecorrido() string {
+	return r.IDRecorrido
 }
 
 func (r *Recorrido) GetDuraccionRecorrido() uint32 {
-	return r.duraccion_recorrido
+	return r.DuracionRecorrido
 }
 
 //origen
-func (r *Recorrido) GetFechaOrigenRecorrido() time.Time{
-	return r.fecha_origen_recorrido
+func (r *Recorrido) GetFechaOrigenRecorrido() time.Time {
+	return r.FechaOrigenRecorrido
 }
 
 //origen
-func (r *Recorrido) GetIdEstacionOrigen() string{
-	return r.id_estacion_origen
+func (r *Recorrido) GetIdEstacionOrigen() string {
+	return r.IDEstacionOrigen
 }
 
 //origen
-func (r *Recorrido) GetNombreEstacionOrigen() string{
-	return r.nombre_estacion_origen
+func (r *Recorrido) GetNombreEstacionOrigen() string {
+	return r.NombreEstacionOrigen
 }
 
 //origen
-func (r *Recorrido) GetDireccionEstacionOrigen() string{
-	return r.direccion_estacion_origen
+func (r *Recorrido) GetDireccionEstacionOrigen() string {
+	return r.DireccionEstacionOrigen
 }
 
 //origen
-func (r *Recorrido) GetLongEstacionOrigen() float32{
-	return r.long_estacion_origen
+func (r *Recorrido) GetLongEstacionOrigen() float32 {
+	return r.LongEstacionOrigen
 }
 
 //origen
-func (r *Recorrido) GetLatEstacionOrigen() float32{
-	return r.lat_estacion_origen
+func (r *Recorrido) GetLatEstacionOrigen() float32 {
+	return r.LatEstacionOrigen
 }
 
 //origen
-func (r *Recorrido) GetLongLatEstacionOrigen() (float32, float32){
-	return r.long_estacion_origen, r.lat_estacion_origen
+func (r *Recorrido) GetLongLatEstacionOrigen() (float32, float32) {
+	return r.LongEstacionOrigen, r.LatEstacionOrigen
 }
 
 //destino
-func (r *Recorrido) GetFechaDestinoRecorrido() time.Time{
-	return r.fecha_destino_recorrido
+func (r *Recorrido) GetFechaDestinoRecorrido() time.Time {
+	return r.FechaDestinoRecorrido
 }
 
 //destino
-func (r *Recorrido) GetIdEstacionDestino() string{
-	return r.id_estacion_destino
+func (r *Recorrido) GetIdEstacionDestino() string {
+	return r.IDEstacionDestino
 }
 
 //destino
-func (r *Recorrido) GetNombreEstacionDestino() string{
-	return r.nombre_estacion_destino
+func (r *Recorrido) GetNombreEstacionDestino() string {
+	return r.NombreEstacionDestino
 }
 
 //destino
-func (r *Recorrido) GetDireccionEstacionDestino() string{
-	return r.direccion_estacion_destino
+func (r *Recorrido) GetDireccionEstacionDestino() string {
+	return r.DireccionEstacionDestino
 }
 
 //destino
-func (r *Recorrido) GetLongEstacionDestino() float32{
-	return r.long_estacion_destino
+func (r *Recorrido) GetLongEstacionDestino() float32 {
+	return r.LongEstacionDestino
 }
 
 //destino
-func (r *Recorrido) GetLatEstacionDestino() float32{
-	return r.lat_estacion_destino
+func (r *Recorrido) GetLatEstacionDestino() float32 {
+	return r.LatEstacionDestino
 }
 
 //destino
-func (r *Recorrido) GetLongLatEstacionDestino() (float32, float32){
-	return r.long_estacion_destino, r.lat_estacion_destino
+func (r *Recorrido) GetLongLatEstacionDestino() (float32, float32) {
+	return r.LongEstacionDestino, r.LatEstacionDestino
 }
 
-func (r *Recorrido) GetIdUsuario() string{
-	return r.id_usuario
+func (r *Recorrido) GetIdUsuario() string {
+	return r.IDUsuario
 }
 
-func (r *Recorrido) ModeloBicicleta() string{
-	return r.modelo_bicicleta
+func (r *Recorrido) GetModeloBicicleta() string {
+	return r.ModeloBicicleta
 }

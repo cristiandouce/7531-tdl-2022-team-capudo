@@ -1,121 +1,121 @@
 package model
 
-type Bicicletero struct{
+type Bicicletero struct {
 	//ubicación geográfica
-	lat float32
-	long float32
+	Lat  float32 `json:"latitud"`
+	Long float32 `json:"longitud"`
 	//características
-	id uint16
-	nombre_referencia string
-	anio_de_ingreso uint16
-	tipo string
-	cantidad_bicicleteros int16
+	ID                   uint16 `json:"id"`
+	NombreReferencia     string `json:"nombre_referencia"`
+	AnioIngreso          uint16 `json:"anio_ingreso"`
+	Tipo                 string `json:"tipo"`
+	CantidadBicicleteros int16  `json:"cantidad_bicicleteros"`
 	//dirección y clasificación
-	ubicacion string
-	clasificacion_lugar string
-	calle string
-	altura uint16
-	calle_interseccion string	 
-	barrio string
-	comuna string
-	codigo_postal string
-	codigo_postal_argentino string
+	Ubicacion             string `json:"ubicacion"`
+	ClasificacionLugar    string `json:"clasificacion_lugar"`
+	Calle                 string `json:"calle"`
+	Altura                uint16 `json:"altura"`
+	CalleInterseccion     string `json:"calle_interseccion"`
+	Barrio                string `json:"barrio"`
+	Comuna                string `json:"comuna"`
+	CodigoPostal          string `json:"codigo_postal"`
+	CodigoPostalArgentino string `json:"codigo_postal_argentino"`
 }
 
-func CreateBicicletero(lat float32, long float32, id uint16, nombre_referencia string, 
-					anio_de_ingreso uint16, tipo string, cantidad_bicicleteros int16,
-					ubicacion string, clasificacion_lugar string,
-					calle string, altura uint16, calle_interseccion string, 
-					barrio string, comuna string, codigo_postal string,
-					codigo_postal_argentino string) (b *Bicicletero){
-	b = new (Bicicletero)
+func CreateBicicletero(Lat float32, Long float32, ID uint16, NombreReferencia string,
+	AnioIngreso uint16, Tipo string, CantidadBicicleteros int16,
+	Ubicacion string, ClasificacionLugar string,
+	Calle string, Altura uint16, CalleInterseccion string,
+	Barrio string, Comuna string, CodigoPostal string,
+	CodigoPostalArgentino string) (b *Bicicletero) {
+	b = new(Bicicletero)
 	//ubicación geográfica
-	b.lat = lat
-	b.long = long
+	b.Lat = Lat
+	b.Long = Long
 	//características
-	b.id = id
-	b.nombre_referencia = nombre_referencia
-	b.anio_de_ingreso = anio_de_ingreso
-	b.tipo = tipo
-	b.cantidad_bicicleteros = cantidad_bicicleteros
+	b.ID = ID
+	b.NombreReferencia = NombreReferencia
+	b.AnioIngreso = AnioIngreso
+	b.Tipo = Tipo
+	b.CantidadBicicleteros = CantidadBicicleteros
 	//dirección y clasificación
-	b.ubicacion = ubicacion
-	b.clasificacion_lugar = clasificacion_lugar
-	b.calle = calle
-	b.altura = altura
-	b.calle_interseccion = calle_interseccion
-	b.barrio = barrio
-	b.comuna = comuna
-	b.codigo_postal = codigo_postal
-	b.codigo_postal_argentino = codigo_postal_argentino
+	b.Ubicacion = Ubicacion
+	b.ClasificacionLugar = ClasificacionLugar
+	b.Calle = Calle
+	b.Altura = Altura
+	b.CalleInterseccion = CalleInterseccion
+	b.Barrio = Barrio
+	b.Comuna = Comuna
+	b.CodigoPostal = CodigoPostal
+	b.CodigoPostalArgentino = CodigoPostalArgentino
 	return b
 }
 
-func (b *Bicicletero) GetLong() float32{
-	return b.long
+func (b *Bicicletero) GetLong() float32 {
+	return b.Long
 }
 
-func (b *Bicicletero) GetLat() float32{
-	return b.lat
+func (b *Bicicletero) GetLat() float32 {
+	return b.Lat
 }
 
-func (b *Bicicletero) GetLongLat() (float32, float32){
-	return b.long, b.lat
+func (b *Bicicletero) GetLongLat() (float32, float32) {
+	return b.Long, b.Lat
 }
 
-func (b *Bicicletero) GetId() uint16{
-	return b.id
+func (b *Bicicletero) GetId() uint16 {
+	return b.ID
 }
 
-func (b *Bicicletero) GetNombreReferencia() string{
-	return b.nombre_referencia
+func (b *Bicicletero) GetNombreReferencia() string {
+	return b.NombreReferencia
 }
 
 func (b *Bicicletero) GetAnioDeIngreso() uint16 {
-	return b.anio_de_ingreso
+	return b.AnioIngreso
 }
 
-func (b *Bicicletero) GetTipo() string{
-	return b.tipo
+func (b *Bicicletero) GetTipo() string {
+	return b.Tipo
 }
 
-func (b *Bicicletero) GetCantidadBicicleteros() int16{
-	return b.cantidad_bicicleteros
+func (b *Bicicletero) GetCantidadBicicleteros() int16 {
+	return b.CantidadBicicleteros
 }
 
 //dirección y clasificación
-func (b *Bicicletero) GetUbicacion() string{
-	return b.ubicacion
+func (b *Bicicletero) GetUbicacion() string {
+	return b.Ubicacion
 }
 
-func (b *Bicicletero) GetClasificacionLugar() string{
-	return b.clasificacion_lugar
+func (b *Bicicletero) GetClasificacionLugar() string {
+	return b.ClasificacionLugar
 }
 
-func (b *Bicicletero) GetCalle() string{
-	return b.calle
+func (b *Bicicletero) GetCalle() string {
+	return b.Calle
 }
 
-func (b *Bicicletero) GetAltura() uint16{
-	return b.altura
+func (b *Bicicletero) GetAltura() uint16 {
+	return b.Altura
 }
 
-func (b *Bicicletero) GetCalleInterseccion() string{
-	return b.calle_interseccion
-} 
-
-func (b *Bicicletero) GetBarrio() string{
-	return b.barrio
+func (b *Bicicletero) GetCalleInterseccion() string {
+	return b.CalleInterseccion
 }
 
-func (b *Bicicletero) GetComuna() string{
-	return b.comuna
+func (b *Bicicletero) GetBarrio() string {
+	return b.Barrio
 }
 
-func (b *Bicicletero) GetCodigoPostal() string{
-	return b.codigo_postal
+func (b *Bicicletero) GetComuna() string {
+	return b.Comuna
 }
 
-func (b *Bicicletero) GetCodigoPostalArgentino() string{
-	return b.codigo_postal_argentino
+func (b *Bicicletero) GetCodigoPostal() string {
+	return b.CodigoPostal
+}
+
+func (b *Bicicletero) GetCodigoPostalArgentino() string {
+	return b.CodigoPostalArgentino
 }

@@ -97,13 +97,14 @@ func createParserRecorridos() (parReco *parserRecorridos, e error) {
 	Nota: la función utiliza una llave de exclusión internamente.
 */
 func GetRecorridos() (recorridos *[]model.Recorrido, e error) {
+	lock_recorridos.Lock()
+	defer lock_recorridos.Unlock()
 	if instanceParserRecorridos == nil {
-		lock_recorridos.Lock()
-		defer lock_recorridos.Unlock()
 		instanceParserRecorridos, e = createParserRecorridos()
-		if e == nil {
-			recorridos = &instanceParserRecorridos.recorridos
+		if e != nil {
+			return nil, e
 		}
 	}
+	recorridos = &instanceParserRecorridos.recorridos
 	return recorridos, e
 }
