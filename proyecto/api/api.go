@@ -4,31 +4,38 @@ import (
 	"capudo/config"
 
 	"capudo/api/routes/bicicleteros"
+	"capudo/api/routes/recorridos"
+	"capudo/api/routes/usuarios"
 
-	"fmt"
-
-	"net/http"
+	"log"
 
 	"github.com/gin-gonic/gin"
 )
 
-var server *gin.Engine
+var app *gin.Engine
+
+var logger = log.Default()
 
 func init() {
-	fmt.Println("Iniciando el servidor API rest", config.Get("PORT"))
+	logger.SetPrefix("[CAPUDO-API] ")
+	logger.Println("Iniciando el servidor API rest", config.Get("PORT"))
 
-	server = gin.Default()
+	app = gin.Default()
+	app.RedirectTrailingSlash = true
 
-	server.GET("/ping", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "pong",
-		})
-	})
+	group := app.Group("/api")
 
-	bicicleteros.Attach(server)
+	attach(group, bicicleteros.GetRoutes())
+	recorridos.Attach(group)
+	usuarios.Attach(group)
+}
+
+func attach(group *gin.RouterGroup, routes gin.RoutesInfo) {
+	for _, r := range routes {
+		group.Handle(r.Method, r.Path, r.HandlerFunc)
+	}
 }
 
 func Start() {
-	server.Run(":" + config.Get("PORT")) // listen and serve on 0.0.0.0:8080
-
+	app.Run(":" + config.Get("PORT"))
 }

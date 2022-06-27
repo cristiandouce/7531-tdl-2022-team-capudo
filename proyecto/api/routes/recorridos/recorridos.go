@@ -1,8 +1,7 @@
-package bicicleteros
+package recorridos
 
 import (
 	"capudo/api/routes"
-
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -13,7 +12,7 @@ var submodule *gin.Engine
 func init() {
 	submodule = gin.New()
 
-	router := submodule.Group("/bicicleteros")
+	router := submodule.Group("/recorridos")
 
 	router.GET("", func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, gin.H{
