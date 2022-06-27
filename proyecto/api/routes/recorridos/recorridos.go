@@ -6,6 +6,7 @@ import (
 	"capudo/model"
 	"errors"
 	"net/http"
+	"sync"
 
 	"github.com/gin-gonic/gin"
 )
@@ -66,6 +67,72 @@ func init() {
 		}
 
 		routes.ReplyWithNotFoundError(ctx, errors.New("recorrido no encontrado"))
+	})
+	router.GET("bicicletero_destino/:id", func(ctx *gin.Context) {
+		bicicleteroId := ctx.Param("id")
+		if bicicleteroId == "" {
+			routes.ReplyWithBadRequesterror(ctx, errors.New("id de bicicletero invalido"))
+			return
+		}
+		recorridos, err := dataBase.GetRecorridos()
+		if err != nil {
+			routes.ReplyWithInternalServerError(ctx, err)
+			return
+		}
+		filteredRecorrido := FilterRecorridos(*recorridos, func(recorrido model.Recorrido) bool {
+			return recorrido.GetIdEstacionDestino() == bicicleteroId
+		})
+		ctx.JSON(http.StatusOK, filteredRecorrido)
+	})
+	router.GET("bicicletero_origen/:id", func(ctx *gin.Context) {
+		bicicleteroId := ctx.Param("id")
+		if bicicleteroId == "" {
+			routes.ReplyWithBadRequesterror(ctx, errors.New("id de bicicletero invalido"))
+			return
+		}
+		recorridos, err := dataBase.GetRecorridos()
+		if err != nil {
+			routes.ReplyWithInternalServerError(ctx, err)
+			return
+		}
+
+		filteredRecorrido := FilterRecorridos(*recorridos, func(recorrido model.Recorrido) bool {
+			return recorrido.GetIdEstacionOrigen() == bicicleteroId
+		})
+
+		ctx.JSON(http.StatusOK, filteredRecorrido)
+	})
+	router.GET("bicicletero_origen_destino/:id", func(ctx *gin.Context) {
+		wg := &sync.WaitGroup{}
+		bicicleteroId := ctx.Param("id")
+		if bicicleteroId == "" {
+			routes.ReplyWithBadRequesterror(ctx, errors.New("id de bicicletero invalido"))
+			return
+		}
+		recorridos, err := dataBase.GetRecorridos()
+		if err != nil {
+			routes.ReplyWithInternalServerError(ctx, err)
+			return
+		}
+		var filteredRecorrido []model.Recorrido
+
+		wg.Add(1)
+		go func() {
+			LoadFileteredRecorridos(&filteredRecorrido, *recorridos, func(recorrido model.Recorrido) bool {
+				return recorrido.GetIdEstacionOrigen() == bicicleteroId
+			})
+			wg.Done()
+		}()
+
+		wg.Add(1)
+		go func() {
+			LoadFileteredRecorridos(&filteredRecorrido, *recorridos, func(recorrido model.Recorrido) bool {
+				return recorrido.GetIdEstacionDestino() == bicicleteroId
+			})
+			wg.Done()
+		}()
+		wg.Wait()
+		ctx.JSON(http.StatusOK, filteredRecorrido)
 	})
 }
 
