@@ -2,13 +2,13 @@ package main
 
 import (
 	//"capudo/dataBase"
-	"fmt"
+	"capudo/logger"
 
 	"capudo/api"
 )
 
 func main() {
-	fmt.Println("capudo ok")
+	logger.LogInfo("DOJO CAPUDO - welcome!")
 
 	api.Start()
 }
