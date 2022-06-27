@@ -68,6 +68,7 @@ func init() {
 
 		routes.ReplyWithNotFoundError(ctx, errors.New("recorrido no encontrado"))
 	})
+	//Recibe una id de destino por parametros y retorna los recorridos
 	router.GET("bicicletero_destino/:id", func(ctx *gin.Context) {
 		bicicleteroId := ctx.Param("id")
 		if bicicleteroId == "" {
@@ -84,6 +85,7 @@ func init() {
 		})
 		ctx.JSON(http.StatusOK, filteredRecorrido)
 	})
+	//Recibe una id de origen por parametros y retorna los recorridos
 	router.GET("bicicletero_origen/:id", func(ctx *gin.Context) {
 		bicicleteroId := ctx.Param("id")
 		if bicicleteroId == "" {
@@ -102,7 +104,10 @@ func init() {
 
 		ctx.JSON(http.StatusOK, filteredRecorrido)
 	})
-	router.GET("bicicletero_origen_destino/:id", func(ctx *gin.Context) {
+	//Recibe una id de bicicletero por parametros y retorna los recorridos que tengan el id
+	//como origen o destino
+	//La consulta se realiza de forma concurrente
+	router.GET("bicicletero_origen_destinoGO/:id", func(ctx *gin.Context) {
 		wg := &sync.WaitGroup{}
 		bicicleteroId := ctx.Param("id")
 		if bicicleteroId == "" {
@@ -132,6 +137,32 @@ func init() {
 			wg.Done()
 		}()
 		wg.Wait()
+		ctx.JSON(http.StatusOK, filteredRecorrido)
+	})
+	//Recibe una id de bicicletero por parametros y retorna los recorridos que tengan el id
+	//como origen o destino
+	//La consulta NO se realiza de forma concurrente
+	router.GET("bicicletero_origen_destino/:id", func(ctx *gin.Context) {
+		bicicleteroId := ctx.Param("id")
+		if bicicleteroId == "" {
+			routes.ReplyWithBadRequesterror(ctx, errors.New("id de bicicletero invalido"))
+			return
+		}
+		recorridos, err := dataBase.GetRecorridos()
+		if err != nil {
+			routes.ReplyWithInternalServerError(ctx, err)
+			return
+		}
+		var filteredRecorrido []model.Recorrido
+
+		LoadFileteredRecorridos(&filteredRecorrido, *recorridos, func(recorrido model.Recorrido) bool {
+			return recorrido.GetIdEstacionOrigen() == bicicleteroId
+		})
+
+		LoadFileteredRecorridos(&filteredRecorrido, *recorridos, func(recorrido model.Recorrido) bool {
+			return recorrido.GetIdEstacionDestino() == bicicleteroId
+		})
+
 		ctx.JSON(http.StatusOK, filteredRecorrido)
 	})
 }

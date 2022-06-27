@@ -15,6 +15,7 @@ func FilterRecorridos(recorridos []model.Recorrido, f filterFuncRecorridos) []mo
 	}
 	return filtered
 }
+
 func LoadFileteredRecorridos(filtered *[]model.Recorrido, recorridos []model.Recorrido, f filterFuncRecorridos) {
 	for _, recorrido := range recorridos {
 		if f(recorrido) {
