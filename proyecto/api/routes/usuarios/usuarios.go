@@ -34,17 +34,10 @@ func init() {
 			return
 		}
 
-		fmt.Println("PARSE QUERY", query, query.Edad)
+		usuariosFiltrados := FiltrarPorFecha(usuarios, query.FechaAltaDesde, query.FechaAltaHasta)
+		usuariosFiltrados = FiltrarPorEdad(&usuariosFiltrados, query.Edad, query.EdadDesde, query.EdadHasta)
 
-		// usuariosFiltrados := filterUsuarios.FiltrarPorFecha(usuarios, query.FechaAltaDesde, query.FechaAltaHasta)
-		// usuariosFiltrados := filterUsuarios.FiltrarPorEdad(usuariosFiltrados, query.Edad)
-		
-		// luego queda solo filtrar
-		// filteredUsers := dataBase.FilterUsuarios(*usuarios, func(u model.Usuario) bool {
-		// 	return u.GetEdadUsuario() > 19
-		// })
-
-		ctx.JSON(http.StatusOK, usuarios)
+		ctx.JSON(http.StatusOK, usuariosFiltrados)
 	})
 
 	router.GET("/:id", func(ctx *gin.Context) {
