@@ -1,9 +1,7 @@
 package main
 
 import (
-	//"capudo/dataBase"
 	"capudo/logger"
-
 	"capudo/api"
 )
 
