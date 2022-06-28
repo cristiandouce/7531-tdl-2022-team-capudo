@@ -22,14 +22,27 @@ func init() {
 	router.GET("", func(ctx *gin.Context) {
 		usuarios, err := dataBase.GetUsuarios()
 
-		// filteredUsers := dataBase.FilterUsuarios(*usuarios, func(u model.Usuario) bool {
-		// 	return u.GetEdadUsuario() > 19
-		// })
-
 		if err != nil {
 			routes.ReplyWithInternalServerError(ctx, err)
 			return
 		}
+
+		query, err := ParseQuery(ctx)
+
+		if err != nil {
+			routes.ReplyWithBadRequesterror(ctx, err)
+			return
+		}
+
+		fmt.Println("PARSE QUERY", query, query.Edad)
+
+		// usuariosFiltrados := filterUsuarios.FiltrarPorFecha(usuarios, query.FechaAltaDesde, query.FechaAltaHasta)
+		// usuariosFiltrados := filterUsuarios.FiltrarPorEdad(usuariosFiltrados, query.Edad)
+		
+		// luego queda solo filtrar
+		// filteredUsers := dataBase.FilterUsuarios(*usuarios, func(u model.Usuario) bool {
+		// 	return u.GetEdadUsuario() > 19
+		// })
 
 		ctx.JSON(http.StatusOK, usuarios)
 	})

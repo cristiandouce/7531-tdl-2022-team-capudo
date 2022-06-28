@@ -3,8 +3,12 @@ package recorridos
 import (
 	"capudo/api/routes"
 	"capudo/dataBase"
+	"capudo/dataBase/parser"
+	"capudo/logger"
 	"capudo/model"
+
 	"errors"
+
 	"net/http"
 	"sync"
 
@@ -165,6 +169,36 @@ func init() {
 
 		ctx.JSON(http.StatusOK, filteredRecorrido)
 	})
+
+	//Recibe una fecha por parametros y retorna los recorridos que se iniciaron posteriores a la misma
+	//Ejemplo de consulta:
+	// http://localhost:8000/api/recorridos/desde_fecha/2020-05-18/00:00:00
+	router.GET("desde_fecha/:fecha/:hora", func(ctx *gin.Context) {
+		fechaDesde := ctx.Param("fecha")
+		horaDesde := ctx.Param("hora")
+		if (fechaDesde == "" || horaDesde == "") {
+			routes.ReplyWithBadRequesterror(ctx, errors.New("fecha invalida"))
+			return
+		}
+		fechaDesdeTime, e := parser.ParseFechaHoraToTimeUTCError(fechaDesde, horaDesde, nil)		
+		if(e != nil){
+			logger.LogDebug("fecha invalida")
+			routes.ReplyWithBadRequesterror(ctx, errors.New("fecha invalida"))
+			return			
+		}
+		recorridos, err := dataBase.GetRecorridos()
+		if err != nil {
+			routes.ReplyWithInternalServerError(ctx, err)
+			return
+		}
+
+		filteredRecorrido := FilterRecorridos(*recorridos, func(recorrido model.Recorrido) bool {
+			return recorrido.GetFechaOrigenRecorrido().After(fechaDesdeTime) 
+		})
+
+		ctx.JSON(http.StatusOK, filteredRecorrido)
+	})
+
 }
 
 func Attach(parent *gin.RouterGroup) {
