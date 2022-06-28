@@ -89,10 +89,14 @@ func FiltrarPorEdad(usuarios *[]model.Usuario, edad uint16, edad_desde uint16, e
 	return filtrados
 }
 
-// func LoadFileteredRecorridos(filtered *[]model.Recorrido, recorridos []model.Recorrido, f filterFuncRecorridos) {
-// 	for _, recorrido := range recorridos {
-// 		if f(recorrido) {
-// 			*filtered = append(*filtered, recorrido)
-// 		}
-// 	}
-// }
+func FiltrarPorGenero(usuarios *[]model.Usuario, genero string) (filtrados []model.Usuario) {
+	filtrados = FiltrarUsuarios(usuarios, func(usuario model.Usuario) bool {
+		if genero != "" {
+			return usuario.GetGeneroUsuario() == genero
+		}
+
+		return true
+	})
+
+	return filtrados
+}
