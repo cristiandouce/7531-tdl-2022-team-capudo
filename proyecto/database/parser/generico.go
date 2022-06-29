@@ -20,12 +20,11 @@ type parserGenerico struct {
 func CreateParserGenerico(pathArchivo string) (p *parserGenerico, err error) {
 	p = new(parserGenerico)
 	archivo, err := os.Open(pathArchivo)
-	if( err == nil){
+	if err == nil {
 		defer archivo.Close()
 		csvReader := csv.NewReader(archivo)
 
-		p.rows, err = csvReader.ReadAll()	
-	} 
+		p.rows, err = csvReader.ReadAll()
+	}
 	return p, err
 }
-
