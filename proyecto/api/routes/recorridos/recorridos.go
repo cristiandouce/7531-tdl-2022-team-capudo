@@ -6,6 +6,7 @@ import (
 	"capudo/model"
 	"errors"
 	"net/http"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -19,9 +20,9 @@ func init() {
 	router.GET("", func(ctx *gin.Context) {
 		// parseo query de la consulta
 		query, err := ParseQuery(ctx)
-		
+
 		// si hay error respondemos con 400 - Bad Request
-		if(err != nil){
+		if err != nil {
 			routes.ReplyWithBadRequesterror(ctx, err)
 			return
 		}
@@ -30,7 +31,7 @@ func init() {
 		recorridos, err := dataBase.GetRecorridos()
 
 		// si hay error respondemos con 500 - Internal Server Error
-		if(err != nil){
+		if err != nil {
 			routes.ReplyWithInternalServerError(ctx, err)
 			return
 		}
@@ -39,7 +40,8 @@ func init() {
 		recorridosFiltrados := FiltrarPorFecha(recorridos, query.FechaDesde, query.FechaHasta)
 		recorridosFiltrados = FiltrarPorEstacionOrigen(&recorridosFiltrados, query.IDEstacionOrigen)
 		recorridosFiltrados = FiltrarPorEstacionDestino(&recorridosFiltrados, query.IDEstacionDestino)
-		
+		recorridosFiltrados = FiltrarPorUsuario(&recorridosFiltrados, query.IDUsuario)
+
 		if recorridosFiltrados == nil {
 			recorridosFiltrados = make([]model.Recorrido, 0)
 		}
