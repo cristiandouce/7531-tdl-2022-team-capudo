@@ -6,7 +6,6 @@ import (
 	"capudo/database/parser"
 	"capudo/model"
 	"errors"
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -78,8 +77,6 @@ func init() {
 			}
 		}
 
-		fmt.Println("USUARIO", usuario)
-
 		if found {
 			// Es necesario pasar la dirección de memoria
 			// para que ctx.JSON invoke la interfaz de `MarshalJSON()`
@@ -89,6 +86,63 @@ func init() {
 
 		routes.ReplyWithNotFoundError(ctx, errors.New("usuario no encontrado"))
 	})
+
+	router.GET("/stats", func(ctx *gin.Context) {
+		ch1, ch2, ch3, ch4 := make(chan int), make(chan int), make(chan int), make(chan map[string]EdadStats)
+
+		usuarios, _ := database.GetUsuarios()
+		go CalcularEdadPromedio(usuarios, ch1)
+		go CalcularEdadMaxima(usuarios, ch2)
+		go CalcularEdadMinima(usuarios, ch3)
+		go CalcularEdadPorGenero(usuarios, ch4)
+
+		edad_promedio, edad_maxima, edad_minima := <-ch1, <-ch2, <-ch3
+
+		// enviamos la respuesta!
+		ctx.JSON(http.StatusOK, gin.H{
+			"edad_promedio": edad_promedio,
+			"edad_maxima":   edad_maxima,
+			"edad_minima":   edad_minima})
+	})
+}
+
+type EdadStats struct {
+	edad_promedio int
+	edad_maxima   int
+	edad_minima   int
+}
+
+func CalcularEdadPromedio(usuarios *[]model.Usuario, ch chan int) {
+	suma := 0
+	total := len(*usuarios)
+	for _, usuario := range *usuarios {
+		suma += int(usuario.GetEdadUsuario())
+	}
+	ch <- suma / total
+}
+
+func CalcularEdadMaxima(usuarios *[]model.Usuario, ch chan int) {
+	max := -1
+	for _, usuario := range *usuarios {
+		if int(usuario.GetEdadUsuario()) > max {
+			max = int(usuario.GetEdadUsuario())
+		}
+	}
+	ch <- max
+}
+
+func CalcularEdadMinima(usuarios *[]model.Usuario, ch chan int) {
+	min := 99999
+	for _, usuario := range *usuarios {
+		if int(usuario.GetEdadUsuario()) < min {
+			min = int(usuario.GetEdadUsuario())
+		}
+	}
+	ch <- min
+}
+
+func CalcularEdadMinima(usuarios *[]model.Usuario, ch chan map[string]EdadStats) {
+
 }
 
 func Attach(parent *gin.RouterGroup) {
