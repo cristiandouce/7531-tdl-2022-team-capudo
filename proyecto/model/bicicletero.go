@@ -1,121 +1,50 @@
 package model
 
+import "strconv"
+
+type Feature struct {
+	Tipo       string              `json:"type"`
+	Properties EstacionBicicletero `json:"properties"`
+	Geometry   Ubicacion           `json:"geometry"`
+}
+type EstacionBicicletero struct {
+	Id        uint32 `json:"id"`
+	Codigo    uint32 `json:"codigo"`
+	Nombre    string `json:"nombre"`
+	Ubicacion string `json:"ubicacion"`
+	Tipo      string `json:"tipo"`
+	Horario   string `json:"horario"`
+	Anclajes  uint16 `json:"anclajes_t"`
+}
+
+type Ubicacion struct {
+	Tipo        string     `json:"tipo"`
+	Coordinates [2]float32 `json:"coordinates"`
+}
 type Bicicletero struct {
+	//características
+	Id         uint32 `json:"id"`
+	Codigo     string `json:"nombre_referencia"`
+	Nombre     string `json:"nombre_estacion"`
+	Ubicacion  string `json:"ubicacion"`
+	Tipo       string `json:"tipo"`
+	Horario    string `json:"horario"`
+	Anclajes_t uint16 `json:"anclajes_t"`
 	//ubicación geográfica
 	Lat  float32 `json:"latitud"`
 	Long float32 `json:"longitud"`
-	//características
-	ID                   uint16 `json:"id"`
-	NombreReferencia     string `json:"nombre_referencia"`
-	AnioIngreso          uint16 `json:"anio_ingreso"`
-	Tipo                 string `json:"tipo"`
-	CantidadBicicleteros int16  `json:"cantidad_bicicleteros"`
-	//dirección y clasificación
-	Ubicacion             string `json:"ubicacion"`
-	ClasificacionLugar    string `json:"clasificacion_lugar"`
-	Calle                 string `json:"calle"`
-	Altura                uint16 `json:"altura"`
-	CalleInterseccion     string `json:"calle_interseccion"`
-	Barrio                string `json:"barrio"`
-	Comuna                string `json:"comuna"`
-	CodigoPostal          string `json:"codigo_postal"`
-	CodigoPostalArgentino string `json:"codigo_postal_argentino"`
 }
 
-func CreateBicicletero(Lat float32, Long float32, ID uint16, NombreReferencia string,
-	AnioIngreso uint16, Tipo string, CantidadBicicleteros int16,
-	Ubicacion string, ClasificacionLugar string,
-	Calle string, Altura uint16, CalleInterseccion string,
-	Barrio string, Comuna string, CodigoPostal string,
-	CodigoPostalArgentino string) (b *Bicicletero) {
-	b = new(Bicicletero)
-	//ubicación geográfica
-	b.Lat = Lat
-	b.Long = Long
-	//características
-	b.ID = ID
-	b.NombreReferencia = NombreReferencia
-	b.AnioIngreso = AnioIngreso
-	b.Tipo = Tipo
-	b.CantidadBicicleteros = CantidadBicicleteros
-	//dirección y clasificación
-	b.Ubicacion = Ubicacion
-	b.ClasificacionLugar = ClasificacionLugar
-	b.Calle = Calle
-	b.Altura = Altura
-	b.CalleInterseccion = CalleInterseccion
-	b.Barrio = Barrio
-	b.Comuna = Comuna
-	b.CodigoPostal = CodigoPostal
-	b.CodigoPostalArgentino = CodigoPostalArgentino
+func ParserFeatureToBicicletero(feature Feature) Bicicletero {
+	var b Bicicletero
+	b.Id = feature.Properties.Id
+	b.Codigo = strconv.FormatUint(uint64(feature.Properties.Codigo), 10) + "BAEcobici"
+	b.Nombre = feature.Properties.Nombre
+	b.Ubicacion = feature.Properties.Ubicacion
+	b.Tipo = feature.Properties.Tipo
+	b.Horario = feature.Properties.Horario
+	b.Anclajes_t = feature.Properties.Anclajes
+	b.Long = feature.Geometry.Coordinates[0]
+	b.Lat = feature.Geometry.Coordinates[1]
 	return b
-}
-
-func (b *Bicicletero) GetLong() float32 {
-	return b.Long
-}
-
-func (b *Bicicletero) GetLat() float32 {
-	return b.Lat
-}
-
-func (b *Bicicletero) GetLongLat() (float32, float32) {
-	return b.Long, b.Lat
-}
-
-func (b *Bicicletero) GetId() uint16 {
-	return b.ID
-}
-
-func (b *Bicicletero) GetNombreReferencia() string {
-	return b.NombreReferencia
-}
-
-func (b *Bicicletero) GetAnioDeIngreso() uint16 {
-	return b.AnioIngreso
-}
-
-func (b *Bicicletero) GetTipo() string {
-	return b.Tipo
-}
-
-func (b *Bicicletero) GetCantidadBicicleteros() int16 {
-	return b.CantidadBicicleteros
-}
-
-//dirección y clasificación
-func (b *Bicicletero) GetUbicacion() string {
-	return b.Ubicacion
-}
-
-func (b *Bicicletero) GetClasificacionLugar() string {
-	return b.ClasificacionLugar
-}
-
-func (b *Bicicletero) GetCalle() string {
-	return b.Calle
-}
-
-func (b *Bicicletero) GetAltura() uint16 {
-	return b.Altura
-}
-
-func (b *Bicicletero) GetCalleInterseccion() string {
-	return b.CalleInterseccion
-}
-
-func (b *Bicicletero) GetBarrio() string {
-	return b.Barrio
-}
-
-func (b *Bicicletero) GetComuna() string {
-	return b.Comuna
-}
-
-func (b *Bicicletero) GetCodigoPostal() string {
-	return b.CodigoPostal
-}
-
-func (b *Bicicletero) GetCodigoPostalArgentino() string {
-	return b.CodigoPostalArgentino
 }
