@@ -96,13 +96,14 @@ func init() {
 		go CalcularEdadMinima(usuarios, ch3)
 		go CalcularEdadPorGenero(usuarios, ch4)
 
-		edad_promedio, edad_maxima, edad_minima := <-ch1, <-ch2, <-ch3
+		edad_promedio, edad_maxima, edad_minima, por_genero := <-ch1, <-ch2, <-ch3, <-ch4
 
 		// enviamos la respuesta!
 		ctx.JSON(http.StatusOK, gin.H{
 			"edad_promedio": edad_promedio,
 			"edad_maxima":   edad_maxima,
-			"edad_minima":   edad_minima})
+			"edad_minima":   edad_minima,
+			"por_genero":    por_genero})
 	})
 }
 
@@ -141,8 +142,10 @@ func CalcularEdadMinima(usuarios *[]model.Usuario, ch chan int) {
 	ch <- min
 }
 
-func CalcularEdadMinima(usuarios *[]model.Usuario, ch chan map[string]EdadStats) {
-
+func CalcularEdadPorGenero(usuarios *[]model.Usuario, ch chan map[string]EdadStats) {
+	var stats map[string]EdadStats
+	// repetir lo mismo pero para arrays filtrados for genero y construir el mapa
+	ch <- stats
 }
 
 func Attach(parent *gin.RouterGroup) {
