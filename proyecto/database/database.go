@@ -1,7 +1,7 @@
-package dataBase
+package database
 
 import (
-	"capudo/dataBase/parser"
+	"capudo/database/parser"
 	"capudo/model"
 )
 

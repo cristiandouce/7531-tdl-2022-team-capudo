@@ -2,8 +2,8 @@ package bicicleteros
 
 import (
 	"capudo/api/routes"
-	"capudo/dataBase"
-	"capudo/dataBase/parser"
+	"capudo/database"
+	"capudo/database/parser"
 	"capudo/model"
 	"errors"
 
@@ -30,7 +30,7 @@ func init() {
 		}
 
 		// obtención de todos los registros de recorridos sin filtrar
-		bicicleteros, err := dataBase.GetBicicleteros()
+		bicicleteros, err := database.GetBicicleteros()
 
 		// si hay error respondemos con 500 - Internal Server Error
 		if err != nil {
@@ -55,7 +55,7 @@ func init() {
 			return
 		}
 
-		bicicleteros, err := dataBase.GetBicicleteros()
+		bicicleteros, err := database.GetBicicleteros()
 
 		if err != nil {
 			routes.ReplyWithInternalServerError(ctx, err)

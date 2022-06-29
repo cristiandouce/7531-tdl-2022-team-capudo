@@ -2,7 +2,7 @@ package recorridos
 
 import (
 	"capudo/api/routes"
-	"capudo/dataBase"
+	"capudo/database"
 	"capudo/model"
 	"errors"
 	"net/http"
@@ -28,7 +28,7 @@ func init() {
 		}
 
 		// obtención de todos los registros de recorridos sin filtrar
-		recorridos, err := dataBase.GetRecorridos()
+		recorridos, err := database.GetRecorridos()
 
 		// si hay error respondemos con 500 - Internal Server Error
 		if err != nil {
@@ -56,7 +56,7 @@ func init() {
 			return
 		}
 
-		recorridos, err := dataBase.GetRecorridos()
+		recorridos, err := database.GetRecorridos()
 
 		if err != nil {
 			routes.ReplyWithInternalServerError(ctx, err)

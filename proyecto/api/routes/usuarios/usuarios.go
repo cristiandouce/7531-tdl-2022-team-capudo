@@ -2,8 +2,8 @@ package usuarios
 
 import (
 	"capudo/api/routes"
-	"capudo/dataBase"
-	"capudo/dataBase/parser"
+	"capudo/database"
+	"capudo/database/parser"
 	"capudo/model"
 	"errors"
 	"fmt"
@@ -30,7 +30,7 @@ func init() {
 		}
 
 		// seguimos por obtener todos los registros de usuarios
-		usuarios, err := dataBase.GetUsuarios()
+		usuarios, err := database.GetUsuarios()
 
 		// de tener un error respondemos con 500 - Internal Server Error
 		if err != nil {
@@ -60,7 +60,7 @@ func init() {
 			return
 		}
 
-		usuarios, err := dataBase.GetUsuarios()
+		usuarios, err := database.GetUsuarios()
 
 		if err != nil {
 			routes.ReplyWithInternalServerError(ctx, err)
