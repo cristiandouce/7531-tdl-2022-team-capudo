@@ -35,7 +35,7 @@ func init() {
 	})
 
 	router.GET("/:id", func(ctx *gin.Context) {
-		bicicleteroId, err := parser.ParseToUint16Error(ctx.Param("id"), nil)
+		bicicleteroId, err := parser.ParseToUint32Error(ctx.Param("id"), nil)
 
 		if err != nil {
 			routes.ReplyWithBadRequesterror(ctx, err)
@@ -53,7 +53,7 @@ func init() {
 		var bicicletero model.Bicicletero
 
 		for _, b := range *bicicleteros {
-			if b.GetId() == bicicleteroId {
+			if b.Id == bicicleteroId {
 				found = true
 				bicicletero = b
 				break

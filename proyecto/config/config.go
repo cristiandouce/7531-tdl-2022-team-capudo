@@ -16,9 +16,9 @@ type Configuration struct {
 
 var defaults = map[string]string{
 	"PORT":              "8000",
-	"PATH_RECORRIDOS":   path.Join(utils.GetPWD(), "datasets/recorridos.csv"),
-	"PATH_BICICLETEROS": path.Join(utils.GetPWD(), "datasets/bicicleteros.csv"),
-	"PATH_USUARIOS":     path.Join(utils.GetPWD(), "datasets/usuarios.csv")}
+	"PATH_RECORRIDOS":   path.Join(utils.GetPWD(), "datasets/recorridos_corto.csv"),
+	"PATH_BICICLETEROS": path.Join(utils.GetPWD(), "datasets/bicicleteros.json"),
+	"PATH_USUARIOS":     path.Join(utils.GetPWD(), "datasets/usuarios_corto.csv")}
 
 // Package init() functions are guaranteed to be called only once and all called
 // from a single thread ( they're thread-safe unless you make them multi-threaded).
