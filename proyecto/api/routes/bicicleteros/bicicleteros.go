@@ -20,18 +20,31 @@ func init() {
 	router := submodule.Group("/bicicleteros")
 
 	router.GET("", func(ctx *gin.Context) {
+		// parseo query de la consulta
+		query, err := ParseQuery(ctx)
+
+		// si hay error respondemos con 400 - Bad Request
+		if err != nil {
+			routes.ReplyWithBadRequesterror(ctx, err)
+			return
+		}
+
+		// obtención de todos los registros de recorridos sin filtrar
 		bicicleteros, err := dataBase.GetBicicleteros()
 
-		// filteredUsers := dataBase.Filterbicicleteros(*bicicleteros, func(u model.Usuario) bool {
-		// 	return u.GetEdadUsuario() > 19
-		// })
-
+		// si hay error respondemos con 500 - Internal Server Error
 		if err != nil {
 			routes.ReplyWithInternalServerError(ctx, err)
 			return
 		}
 
-		ctx.JSON(http.StatusOK, bicicleteros)
+		// Filtrado de resultados según la query de consulta con nuestros filtros helper
+		bicicleterosFiltrados := FiltrarPorAnclajes(bicicleteros, query.Anclajes_t, query.Anclajes_max, query.Anclajes_min)
+
+		if bicicleterosFiltrados == nil {
+			bicicleterosFiltrados = make([]model.Bicicletero, 0)
+		}
+		ctx.JSON(http.StatusOK, bicicleterosFiltrados)
 	})
 
 	router.GET("/:id", func(ctx *gin.Context) {
