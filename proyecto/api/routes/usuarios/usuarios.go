@@ -88,7 +88,7 @@ func init() {
 	})
 
 	router.GET("/stats", func(ctx *gin.Context) {
-		ch1, ch2, ch3, ch4 := make(chan int), make(chan int), make(chan int), make(chan map[string]EdadStats)
+		ch1, ch2, ch3, ch4 := make(chan int), make(chan int), make(chan int), make(chan GeneroStats)
 
 		usuarios, _ := database.GetUsuarios()
 		go CalcularEdadPromedio(usuarios, ch1)
@@ -105,47 +105,6 @@ func init() {
 			"edad_minima":   edad_minima,
 			"por_genero":    por_genero})
 	})
-}
-
-type EdadStats struct {
-	edad_promedio int
-	edad_maxima   int
-	edad_minima   int
-}
-
-func CalcularEdadPromedio(usuarios *[]model.Usuario, ch chan int) {
-	suma := 0
-	total := len(*usuarios)
-	for _, usuario := range *usuarios {
-		suma += int(usuario.GetEdadUsuario())
-	}
-	ch <- suma / total
-}
-
-func CalcularEdadMaxima(usuarios *[]model.Usuario, ch chan int) {
-	max := -1
-	for _, usuario := range *usuarios {
-		if int(usuario.GetEdadUsuario()) > max {
-			max = int(usuario.GetEdadUsuario())
-		}
-	}
-	ch <- max
-}
-
-func CalcularEdadMinima(usuarios *[]model.Usuario, ch chan int) {
-	min := 99999
-	for _, usuario := range *usuarios {
-		if int(usuario.GetEdadUsuario()) < min {
-			min = int(usuario.GetEdadUsuario())
-		}
-	}
-	ch <- min
-}
-
-func CalcularEdadPorGenero(usuarios *[]model.Usuario, ch chan map[string]EdadStats) {
-	var stats map[string]EdadStats
-	// repetir lo mismo pero para arrays filtrados for genero y construir el mapa
-	ch <- stats
 }
 
 func Attach(parent *gin.RouterGroup) {
