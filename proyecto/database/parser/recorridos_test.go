@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-const PATH_TEST_RECORRIDOS string = "test_trips_2021.csv"
+const PATH_TEST_RECORRIDOS string = "test_recorridos.csv"
 
 func createDatosParserRecorridoTest() (datos []model.Recorrido) {
 	datos = append(datos, *model.CreateRecorrido("10758473BAEcobici", 591,

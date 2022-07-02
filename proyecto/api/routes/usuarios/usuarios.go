@@ -105,6 +105,17 @@ func init() {
 			"edad_minima":   edad_minima,
 			"por_genero":    por_genero})
 	})
+
+	router.GET("/stats_sync", func(ctx *gin.Context) {
+		usuarios, _ := database.GetUsuarios()
+
+		// enviamos la respuesta!
+		ctx.JSON(http.StatusOK, gin.H{
+			"edad_promedio": CalcularEdadPromedioSync(usuarios),
+			"edad_maxima":   CalcularEdadMaximaSync(usuarios),
+			"edad_minima":   CalcularEdadMinimaSync(usuarios),
+			"por_genero":    CalcularEdadPorGeneroSync(usuarios)})
+	})
 }
 
 func Attach(parent *gin.RouterGroup) {
