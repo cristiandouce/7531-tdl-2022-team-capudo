@@ -1,7 +1,6 @@
 package parser
 
 import (
-	"capudo/model"
 	"fmt"
 	"strconv"
 	"strings"
@@ -197,18 +196,4 @@ func ParseTimeUserUTCError(tiempoCadena string, eParam error) (t time.Time, e er
 		e = eParam
 	}
 	return t, e
-}
-
-func ParserFeatureToBicicletero(feature model.Feature) model.Bicicletero {
-	var b model.Bicicletero
-	b.Id = feature.Properties.Id
-	b.Codigo = strconv.FormatUint(uint64(feature.Properties.Codigo), 10) + "BAEcobici"
-	b.Nombre = feature.Properties.Nombre
-	b.Ubicacion = feature.Properties.Ubicacion
-	b.Tipo = feature.Properties.Tipo
-	b.Horario = feature.Properties.Horario
-	b.Anclajes_t = feature.Properties.Anclajes
-	b.Long = feature.Geometry.Coordinates[0]
-	b.Lat = feature.Geometry.Coordinates[1]
-	return b
 }

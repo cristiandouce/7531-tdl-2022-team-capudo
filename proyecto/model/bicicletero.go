@@ -2,7 +2,7 @@ package model
 
 import "strconv"
 
-type Feature struct {
+type FeatureBicicletero struct {
 	Tipo       string              `json:"type"`
 	Properties EstacionBicicletero `json:"properties"`
 	Geometry   Ubicacion           `json:"geometry"`
@@ -35,7 +35,7 @@ type Bicicletero struct {
 	Long float32 `json:"longitud"`
 }
 
-func ParserFeatureToBicicletero(feature Feature) Bicicletero {
+func ParserFeatureToBicicletero(feature FeatureBicicletero) Bicicletero {
 	var b Bicicletero
 	b.Id = feature.Properties.Id
 	b.Codigo = strconv.FormatUint(uint64(feature.Properties.Codigo), 10) + "BAEcobici"

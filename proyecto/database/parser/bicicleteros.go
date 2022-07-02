@@ -30,14 +30,14 @@ func createParserBicicleterosPath(path string) (parBici *parserBicicleteros, e e
 	parserAux, eParGen := ioutil.ReadFile(path)
 	if eParGen == nil {
 		parBici = new(parserBicicleteros)
-		var features []model.Feature
+		var features []model.FeatureBicicletero
 
 		e = json.Unmarshal(parserAux, &features)
 		if e != nil {
 			return nil, e
 		}
 		for _, feat := range features {
-			x := ParserFeatureToBicicletero(feat)
+			x := model.ParserFeatureToBicicletero(feat)
 			parBici.bicicleteros = append(parBici.bicicleteros, x)
 
 		}
