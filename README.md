@@ -56,7 +56,7 @@ go test ./...
 
 ## Descripción de la API Rest
 
-### GET /api/bicicleteros
+### [GET /api/bicicleteros](https://team-capudo-rest-api.herokuapp.com/api/bicicleteros)
 
 Devuelve la lista total de bicicleteros de la Ciudad de Buenos Aires. Permite filtrar por query:
 
@@ -68,7 +68,7 @@ Parametro | Descripción | Ejemplo
 
 > Los parámetros de consulta pueden combinarse.
 
-### GET /api/bicicleteros/:id
+### [GET /api/bicicleteros/:id](https://team-capudo-rest-api.herokuapp.com/api/bicicleteros/2)
 
 Devuelve la información de un bicicletero por `:id`.
 
@@ -88,7 +88,7 @@ Ejemplo:
 }
 ```
 
-### GET /api/recorridos
+### [GET /api/recorridos](https://team-capudo-rest-api.herokuapp.com/api/recorridos)
 
 Devuelve la lista total de recorridos de la Ciudad de Buenos Aires. Permite filtrar por query:
 
@@ -102,7 +102,7 @@ Parametro | Descripción | Ejemplo
 
 > Los parámetros de consulta pueden combinarse.
 
-### GET /api/recorridos/:id
+### [GET /api/recorridos/:id](https://team-capudo-rest-api.herokuapp.com/api/recorridos/7737009BAEcobici)
 
 Devuelve la información de un recorrido por `:id`.
 
@@ -129,7 +129,7 @@ Ejemplo:
 }
 ```
 
-### GET /api/usuarios
+### [GET /api/usuarios](https://team-capudo-rest-api.herokuapp.com/api/usuarios)
 
 Devuelve la lista total de recorridos de la Ciudad de Buenos Aires. Permite filtrar por query:
 
@@ -144,7 +144,7 @@ Parametro | Descripción | Ejemplo
 
 > Los parámetros de consulta pueden combinarse.
 
-### GET /api/usuarios/:id
+### [GET /api/usuarios/:id](https://team-capudo-rest-api.herokuapp.com/api/usuarios/605638)
 
 Devuelve la información de un usuario por `:id`.
 
@@ -159,7 +159,7 @@ Ejemplo:
 }
 ```
 
-### GET /api/usuarios/stats
+### [GET /api/usuarios/stats](https://team-capudo-rest-api.herokuapp.com/api/usuarios/stats)
 
 Devuelve un objeto de estadísticas calculadas sobre la base de datos completa de usuarios.
 
@@ -190,7 +190,7 @@ Ejemplo:
 }
 ```
 
-### GET /api/usuarios/stats_sync
+### [GET /api/usuarios/stats_sync](https://team-capudo-rest-api.herokuapp.com/api/usuarios/stats_sync)
 
 Identico al endpoint `GET /api/usuarios/stats` pero realiza los cálculos de forma sincrónica, en lugar de utilizar `goroutines` como lo hace el anterior.
 
