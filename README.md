@@ -62,9 +62,9 @@ Devuelve la lista total de bicicleteros de la Ciudad de Buenos Aires. Permite fi
 
 Parametro | Descripción | Ejemplo
 --:|--|--
-`anclajes_t` | Filtrado de bicicleterospor cantidad total y exacta de anclajes | `GET /api/bicicleteros?anclajes_t=30`
-`anclajes_max` | Filtrado por cantidad máxima de anclajes | `GET /api/bicicleteros?anclajes_max=30`
-`anclajes_min` | Filtrado por cantidad mínima de anclajes| `GET /api/bicicleteros?anclajes_min=30`
+`anclajes_t` | Filtrado de bicicleterospor cantidad total y exacta de anclajes | [`GET /api/bicicleteros?anclajes_t=30`](https://team-capudo-rest-api.herokuapp.com/api/bicicleteros?anclajes_t=30)
+`anclajes_max` | Filtrado por cantidad máxima de anclajes | [`GET /api/bicicleteros?anclajes_max=30`](https://team-capudo-rest-api.herokuapp.com/api/bicicleteros?anclajes_max=30)
+`anclajes_min` | Filtrado por cantidad mínima de anclajes| [`GET /api/bicicleteros?anclajes_min=30`](https://team-capudo-rest-api.herokuapp.com/api/bicicleteros?anclajes_min=30)
 
 > Los parámetros de consulta pueden combinarse.
 
@@ -94,11 +94,11 @@ Devuelve la lista total de recorridos de la Ciudad de Buenos Aires. Permite filt
 
 Parametro | Descripción | Ejemplo
 --:|--|--
-`id_estacion_origen` | Filtrado por estación de origen del recorrido | `GET /api/recorridos?id_estacion_origen=123BAEcobici`
-`id_estacion_destino` | Filtrado por estación de destino del recorrido | `GET /api/recorridos?id_estacion_destino=123BAEcobici`
-`fecha_desde` | Filtrado por fecha en que se inicio el recorrido | `GET /api/recorridos?fecha_desde=2020-02-20`
-`fecha_hasta` | Filtrado por fecha en la que se finalizo el recorrido | `GET /api/recorridos?fecha_hasta=2020-02-20`
-`id_usuario` | Filtrado por usuario que ha realizado el recorrido | `GET /api/recorridos?id_usuario=123BAEcobici`
+`id_estacion_origen` | Filtrado por estación de origen del recorrido | [`GET /api/recorridos?id_estacion_origen=123BAEcobici`](https://team-capudo-rest-api.herokuapp.com/api/recorridos?id_estacion_origen=175BAEcobici)
+`id_estacion_destino` | Filtrado por estación de destino del recorrido | [`GET /api/recorridos?id_estacion_destino=123BAEcobici`](https://team-capudo-rest-api.herokuapp.com/api/recorridos?id_estacion_destino=175BAEcobici)
+`fecha_desde` | Filtrado por fecha en que se inicio el recorrido | [`GET /api/recorridos?fecha_desde=2021-02-20`](https://team-capudo-rest-api.herokuapp.com/api/recorridos?fecha_desde=2021-01-02)
+`fecha_hasta` | Filtrado por fecha en la que se finalizo el recorrido | [`GET /api/recorridos?fecha_hasta=2020-02-20`](https://team-capudo-rest-api.herokuapp.com/api/recorridos?fecha_hasta=2021-02-20)
+`id_usuario` | Filtrado por usuario que ha realizado el recorrido | [`GET /api/recorridos?id_usuario=375284BAEcobici`](https://team-capudo-rest-api.herokuapp.com/api/recorridos?id_usuario=375284BAEcobici)
 
 > Los parámetros de consulta pueden combinarse.
 
@@ -135,12 +135,12 @@ Devuelve la lista total de recorridos de la Ciudad de Buenos Aires. Permite filt
 
 Parametro | Descripción | Ejemplo
 --:|--|--
-`genero` | Filtrado por genero del usuario (`F\|M\|OTRO`) | `GET /api/usuarios?genero=M`
-`edad` | Filtrado por edad exacta del usuario | `GET /api/usuarios?edad=37`
-`edad_desde` | Filtrado por edad minima del usuario | `GET /api/usuarios?edad_desde=...`
-`edad_hasta` | Filtrado por edad maxima del usuario | `GET /api/usuarios?edad_hasta=...`
-`fecha_alta_desde` | Filtrado por fecha de alta minima | `GET /api/usuarios?fecha_alta_desde=2020-01-02`
-`fecha_alta_hasta` | Filtrado por fecha de alta máxima | `GET /api/usuarios?fecha_alta_hasta=2021-12-31`
+`genero` | Filtrado por genero del usuario (`F\|M\|OTRO`) | [`GET /api/usuarios?genero=M`](https://team-capudo-rest-api.herokuapp.com/api/usuarios?genero=M)
+`edad` | Filtrado por edad exacta del usuario | [`GET /api/usuarios?edad=37`](https://team-capudo-rest-api.herokuapp.com/api/usuarios?edad=37)
+`edad_desde` | Filtrado por edad minima del usuario | [`GET /api/usuarios?edad_desde=37`](https://team-capudo-rest-api.herokuapp.com/api/usuarios?edad_desde=37)
+`edad_hasta` | Filtrado por edad maxima del usuario | [`GET /api/usuarios?edad_hasta=37`](https://team-capudo-rest-api.herokuapp.com/api/usuarios?edad_hasta=37)
+`fecha_alta_desde` | Filtrado por fecha de alta minima | [`GET /api/usuarios?fecha_alta_desde=2020-01-01`](https://team-capudo-rest-api.herokuapp.com/api/usuarios?fecha_alta_desde=2020-01-01)
+`fecha_alta_hasta` | Filtrado por fecha de alta máxima | [`GET /api/usuarios?fecha_alta_hasta=2020-01-01`](https://team-capudo-rest-api.herokuapp.com/api/usuarios?fecha_alta_hasta=2020-01-01)
 
 > Los parámetros de consulta pueden combinarse.
 
