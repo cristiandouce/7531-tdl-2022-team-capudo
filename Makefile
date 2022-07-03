@@ -7,4 +7,6 @@ run:
 run_big: export PATH_RECORRIDOS="$(current_dir)/proyecto/datasets/recorridos_big_350.csv"
 run_big: run
 
+test:
+	$(MAKE) -C ./proyecto test
 
