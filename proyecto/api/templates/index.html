@@ -1,0 +1,217 @@
+{{template "header.html"}}
+<h1 id="rest-api-en-go-para-consultas-de-ecobici">REST API en Go - para consultas de ECOBICI</h1>
+<blockquote>
+<p>Desarrollado por el <strong>TEAM CAPUDO</strong> para la materia <em>*7531 - Teoría del Lenguaje</em> de la <a href="https://fi.uba.ar">Facultad de Ingeniería de la UBA</a>.</p>
+</blockquote>
+<p><strong>Fuente:</strong> <a href="https://github.com/cristiandouce/7531-tdl-2022-team-capudo">https://github.com/cristiandouce/7531-tdl-2022-team-capudo</a></p>
+<h2 id="integrantes">Integrantes</h2>
+<ul>
+<li><a href="https://github.com/cristiandouce">Cristian Gabriel Douce Suarez</a></li>
+<li><a href="https://github.com/rafaelputaro">Rafael Putaro</a></li>
+<li><a href="https://github.com/calli97">Nahuel Callalli Rivera</a></li>
+</ul>
+<h2 id="de-qu-trata">De qué trata</h2>
+<p>Utilizando los Datasets del proyecto de <a href="https://data.buenosaires.gob.ar/dataset/">Buenos Aires Data</a> construimos una REST API en Go para consultas de las siguientes 3 entidades del año 2021:</p>
+<ul>
+<li><a href="https://data.buenosaires.gob.ar/dataset/bicicletas-publicas/resource/c560b546-67fc-4017-a405-edbd36eec8f6">Usuarios</a></li>
+<li><a href="https://data.buenosaires.gob.ar/dataset/estaciones-bicicletas-publicas/resource/e62fb076-dc64-4c42-b8ea-a8dd47395062">Bicicleteros</a></li>
+<li><a href="https://data.buenosaires.gob.ar/dataset/bicicletas-publicas/resource/a9095876-e584-4b0d-976c-a4600455565b">Recorridos</a></li>
+</ul>
+<p>Implementamos los parsers utilizando los utilitarios nativos del lenguaje, e implementamos el servidor Web utilizando el framework <a href="https://github.com/gin-gonic/gin">Gin</a>.</p>
+
+<h2 id="descripci-n-de-la-api-rest">Descripción de la API Rest</h2>
+<h3 id="-get-api-bicicleteros-https-team-capudo-rest-api-herokuapp-com-api-bicicleteros-"><a href="https://team-capudo-rest-api.herokuapp.com/api/bicicleteros">GET /api/bicicleteros</a></h3>
+<p>Devuelve la lista total de bicicleteros de la Ciudad de Buenos Aires. Permite filtrar por query:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:right">Parametro</th>
+<th>Descripción</th>
+<th>Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right"><code>anclajes_t</code></td>
+<td>Filtrado de bicicleterospor cantidad total y exacta de anclajes</td>
+<td><a href="https://team-capudo-rest-api.herokuapp.com/api/bicicleteros?anclajes_t=30"><code>GET /api/bicicleteros?anclajes_t=30</code></a></td>
+</tr>
+<tr>
+<td style="text-align:right"><code>anclajes_max</code></td>
+<td>Filtrado por cantidad máxima de anclajes</td>
+<td><a href="https://team-capudo-rest-api.herokuapp.com/api/bicicleteros?anclajes_max=30"><code>GET /api/bicicleteros?anclajes_max=30</code></a></td>
+</tr>
+<tr>
+<td style="text-align:right"><code>anclajes_min</code></td>
+<td>Filtrado por cantidad mínima de anclajes</td>
+<td><a href="https://team-capudo-rest-api.herokuapp.com/api/bicicleteros?anclajes_min=30"><code>GET /api/bicicleteros?anclajes_min=30</code></a></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Los parámetros de consulta pueden combinarse.</p>
+</blockquote>
+<h3 id="-get-api-bicicleteros-id-https-team-capudo-rest-api-herokuapp-com-api-bicicleteros-2-"><a href="https://team-capudo-rest-api.herokuapp.com/api/bicicleteros/2">GET /api/bicicleteros/:id</a></h3>
+<p>Devuelve la información de un bicicletero por <code>:id</code>.</p>
+<p>Ejemplo:</p>
+<pre><code class="lang-json">{
+  <span class="hljs-attr">"id"</span>: <span class="hljs-number">2</span>,
+  <span class="hljs-attr">"nombre_referencia"</span>: <span class="hljs-string">"2BAEcobici"</span>,
+  <span class="hljs-attr">"nombre_estacion"</span>: <span class="hljs-string">"002 - Retiro I"</span>,
+  <span class="hljs-attr">"ubicacion"</span>: <span class="hljs-string">"Ramos Mejia, Jose Maria, Dr. Av. &amp; Del Libertador Av."</span>,
+  <span class="hljs-attr">"tipo"</span>: <span class="hljs-string">"AUTOMÁTICA"</span>,
+  <span class="hljs-attr">"horario"</span>: <span class="hljs-string">"Estación automática: disponibilidad las 24 horas"</span>,
+  <span class="hljs-attr">"anclajes_t"</span>: <span class="hljs-number">20</span>,
+  <span class="hljs-attr">"latitud"</span>: <span class="hljs-number">-34.592422</span>,
+  <span class="hljs-attr">"longitud"</span>: <span class="hljs-number">-58.37471</span>
+}
+</code></pre>
+<h3 id="-get-api-recorridos-https-team-capudo-rest-api-herokuapp-com-api-recorridos-"><a href="https://team-capudo-rest-api.herokuapp.com/api/recorridos">GET /api/recorridos</a></h3>
+<p>Devuelve la lista total de recorridos de la Ciudad de Buenos Aires. Permite filtrar por query:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:right">Parametro</th>
+<th>Descripción</th>
+<th>Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right"><code>id_estacion_origen</code></td>
+<td>Filtrado por estación de origen del recorrido</td>
+<td><a href="https://team-capudo-rest-api.herokuapp.com/api/recorridos?id_estacion_origen=175BAEcobici"><code>GET /api/recorridos?id_estacion_origen=123BAEcobici</code></a></td>
+</tr>
+<tr>
+<td style="text-align:right"><code>id_estacion_destino</code></td>
+<td>Filtrado por estación de destino del recorrido</td>
+<td><a href="https://team-capudo-rest-api.herokuapp.com/api/recorridos?id_estacion_destino=175BAEcobici"><code>GET /api/recorridos?id_estacion_destino=123BAEcobici</code></a></td>
+</tr>
+<tr>
+<td style="text-align:right"><code>fecha_desde</code></td>
+<td>Filtrado por fecha en que se inicio el recorrido</td>
+<td><a href="https://team-capudo-rest-api.herokuapp.com/api/recorridos?fecha_desde=2021-01-02"><code>GET /api/recorridos?fecha_desde=2021-02-20</code></a></td>
+</tr>
+<tr>
+<td style="text-align:right"><code>fecha_hasta</code></td>
+<td>Filtrado por fecha en la que se finalizo el recorrido</td>
+<td><a href="https://team-capudo-rest-api.herokuapp.com/api/recorridos?fecha_hasta=2021-02-20"><code>GET /api/recorridos?fecha_hasta=2020-02-20</code></a></td>
+</tr>
+<tr>
+<td style="text-align:right"><code>id_usuario</code></td>
+<td>Filtrado por usuario que ha realizado el recorrido</td>
+<td><a href="https://team-capudo-rest-api.herokuapp.com/api/recorridos?id_usuario=375284BAEcobici"><code>GET /api/recorridos?id_usuario=375284BAEcobici</code></a></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Los parámetros de consulta pueden combinarse.</p>
+</blockquote>
+<h3 id="-get-api-recorridos-id-https-team-capudo-rest-api-herokuapp-com-api-recorridos-7737009baecobici-"><a href="https://team-capudo-rest-api.herokuapp.com/api/recorridos/7737009BAEcobici">GET /api/recorridos/:id</a></h3>
+<p>Devuelve la información de un recorrido por <code>:id</code>.</p>
+<p>Ejemplo:</p>
+<pre><code class="lang-json">{
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"7737009BAEcobici"</span>,
+  <span class="hljs-attr">"duracion_recorrido"</span>: <span class="hljs-number">1658</span>,
+  <span class="hljs-attr">"fecha_origen_recorrido"</span>: <span class="hljs-string">"2020-05-18T13:06:42Z"</span>,
+  <span class="hljs-attr">"id_estacion_origen"</span>: <span class="hljs-string">"33BAEcobici"</span>,
+  <span class="hljs-attr">"nombre_estacion_origen"</span>: <span class="hljs-string">"033 - Facultad de Medicina"</span>,
+  <span class="hljs-attr">"direccion_estacion_origen"</span>: <span class="hljs-string">"Pres. José Evaristo Uriburu 987"</span>,
+  <span class="hljs-attr">"longitud_estacion_origen"</span>: <span class="hljs-number">-58.39898</span>,
+  <span class="hljs-attr">"latitud_estacion_origen"</span>: <span class="hljs-number">-34.59709</span>,
+  <span class="hljs-attr">"fecha_destino_recorrido"</span>: <span class="hljs-string">"2020-05-18T13:34:20Z"</span>,
+  <span class="hljs-attr">"id_estacion_destino"</span>: <span class="hljs-string">"175BAEcobici"</span>,
+  <span class="hljs-attr">"nombre_estacion_destino"</span>: <span class="hljs-string">"147 - Constitución"</span>,
+  <span class="hljs-attr">"direccion_estacion_destino"</span>: <span class="hljs-string">"Avenida Juan de Garay 1050"</span>,
+  <span class="hljs-attr">"longitud_estacion_destino"</span>: <span class="hljs-number">-58.380707</span>,
+  <span class="hljs-attr">"latitud_estacion_destino"</span>: <span class="hljs-number">-34.62685</span>,
+  <span class="hljs-attr">"id_usuario"</span>: <span class="hljs-string">"211329BAEcobici"</span>,
+  <span class="hljs-attr">"modelo_bicicleta"</span>: <span class="hljs-string">"ICONIC"</span>
+}
+</code></pre>
+<h3 id="-get-api-usuarios-https-team-capudo-rest-api-herokuapp-com-api-usuarios-"><a href="https://team-capudo-rest-api.herokuapp.com/api/usuarios">GET /api/usuarios</a></h3>
+<p>Devuelve la lista total de recorridos de la Ciudad de Buenos Aires. Permite filtrar por query:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:right">Parametro</th>
+<th>Descripción</th>
+<th>Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right"><code>genero</code></td>
+<td>Filtrado por genero del usuario (<code>F|M|OTRO</code>)</td>
+<td><a href="https://team-capudo-rest-api.herokuapp.com/api/usuarios?genero=M"><code>GET /api/usuarios?genero=M</code></a></td>
+</tr>
+<tr>
+<td style="text-align:right"><code>edad</code></td>
+<td>Filtrado por edad exacta del usuario</td>
+<td><a href="https://team-capudo-rest-api.herokuapp.com/api/usuarios?edad=37"><code>GET /api/usuarios?edad=37</code></a></td>
+</tr>
+<tr>
+<td style="text-align:right"><code>edad_desde</code></td>
+<td>Filtrado por edad minima del usuario</td>
+<td><a href="https://team-capudo-rest-api.herokuapp.com/api/usuarios?edad_desde=37"><code>GET /api/usuarios?edad_desde=37</code></a></td>
+</tr>
+<tr>
+<td style="text-align:right"><code>edad_hasta</code></td>
+<td>Filtrado por edad maxima del usuario</td>
+<td><a href="https://team-capudo-rest-api.herokuapp.com/api/usuarios?edad_hasta=37"><code>GET /api/usuarios?edad_hasta=37</code></a></td>
+</tr>
+<tr>
+<td style="text-align:right"><code>fecha_alta_desde</code></td>
+<td>Filtrado por fecha de alta minima</td>
+<td><a href="https://team-capudo-rest-api.herokuapp.com/api/usuarios?fecha_alta_desde=2020-01-01"><code>GET /api/usuarios?fecha_alta_desde=2020-01-01</code></a></td>
+</tr>
+<tr>
+<td style="text-align:right"><code>fecha_alta_hasta</code></td>
+<td>Filtrado por fecha de alta máxima</td>
+<td><a href="https://team-capudo-rest-api.herokuapp.com/api/usuarios?fecha_alta_hasta=2020-01-01"><code>GET /api/usuarios?fecha_alta_hasta=2020-01-01</code></a></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Los parámetros de consulta pueden combinarse.</p>
+</blockquote>
+<h3 id="-get-api-usuarios-id-https-team-capudo-rest-api-herokuapp-com-api-usuarios-605638-"><a href="https://team-capudo-rest-api.herokuapp.com/api/usuarios/605638">GET /api/usuarios/:id</a></h3>
+<p>Devuelve la información de un usuario por <code>:id</code>.</p>
+<p>Ejemplo:</p>
+<pre><code class="lang-json">{
+  <span class="hljs-string">"id"</span>: <span class="hljs-number">605638</span>,
+  <span class="hljs-string">"genero"</span>: <span class="hljs-string">"OTRO"</span>, // F | <span class="hljs-type">M</span> | <span class="hljs-type">OTRO</span>
+  <span class="hljs-string">"edad"</span>: <span class="hljs-number">27</span>,
+  <span class="hljs-string">"fecha_alta"</span>: <span class="hljs-string">"2020-09-29T13:03:00Z"</span>
+}
+</code></pre>
+<h3 id="-get-api-usuarios-stats-https-team-capudo-rest-api-herokuapp-com-api-usuarios-stats-"><a href="https://team-capudo-rest-api.herokuapp.com/api/usuarios/stats">GET /api/usuarios/stats</a></h3>
+<p>Devuelve un objeto de estadísticas calculadas sobre la base de datos completa de usuarios.</p>
+<p>Ejemplo:</p>
+<pre><code class="lang-json">{
+  <span class="hljs-attr">"edad_maxima"</span>: <span class="hljs-number">73</span>,
+  <span class="hljs-attr">"edad_minima"</span>: <span class="hljs-number">16</span>,
+  <span class="hljs-attr">"edad_promedio"</span>: <span class="hljs-number">32</span>,
+  <span class="hljs-attr">"por_genero"</span>: {
+    <span class="hljs-attr">"hombre"</span>: {
+      <span class="hljs-attr">"edad_maxima"</span>: <span class="hljs-number">73</span>,
+      <span class="hljs-attr">"edad_minima"</span>: <span class="hljs-number">17</span>,
+      <span class="hljs-attr">"edad_promedio"</span>: <span class="hljs-number">32</span>
+    },
+    <span class="hljs-attr">"mujer"</span>: {
+      <span class="hljs-attr">"edad_maxima"</span>: <span class="hljs-number">71</span>,
+      <span class="hljs-attr">"edad_minima"</span>: <span class="hljs-number">16</span>,
+      <span class="hljs-attr">"edad_promedio"</span>: <span class="hljs-number">33</span>
+    },
+    <span class="hljs-attr">"otro"</span>: {
+      <span class="hljs-attr">"edad_maxima"</span>: <span class="hljs-number">63</span>,
+      <span class="hljs-attr">"edad_minima"</span>: <span class="hljs-number">18</span>,
+      <span class="hljs-attr">"edad_promedio"</span>: <span class="hljs-number">31</span>
+    }
+  }
+}
+</code></pre>
+<h3 id="-get-api-usuarios-stats_sync-https-team-capudo-rest-api-herokuapp-com-api-usuarios-stats_sync-"><a href="https://team-capudo-rest-api.herokuapp.com/api/usuarios/stats_sync">GET /api/usuarios/stats_sync</a></h3>
+<p>Identico al endpoint <code>GET /api/usuarios/stats</code> pero realiza los cálculos de forma sincrónica, en lugar de utilizar <code>goroutines</code> como lo hace el anterior.</p>
+
+{{template "footer.html"}}
